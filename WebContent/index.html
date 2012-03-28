@@ -1,0 +1,74 @@
+<html>
+<head>
+	<title>Minesweeper!</title>
+	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" charset="utf-8" />
+	<link type="text/css" rel="stylesheet" href="css/jquery.minesweeper.css" charset="utf-8" />
+</head>
+<body>
+
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Minesweeper</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Play!</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="hero-unit">
+        <p>Details about the game. Click below for more information.</p>
+        <p><a class="btn btn-primary btn-large">Learn more &raquo;</a>
+        <a class="btn btn-large">View on Github</a>
+        <a class="btn btn-danger btn-large">
+        	<i class="icon-download-alt"></i>
+        	Download Zip Archive</a></p>
+      </div>
+
+      <div class="row">
+        <div class="span12">
+          <h2>Play the Game</h2>
+			<div id="game1"></div>
+			<div id="game2"></div>
+        </div>
+
+      <hr>
+
+      <footer>
+        <p>&copy; JustinWyne.com 2012</p>
+      </footer>
+
+    </div>
+
+    <!-- javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/jquery.minesweeper.js"></script>
+	
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$('#game1').minesweeper();
+		$('#game2').minesweeper( {
+			rows: 6,
+			columns: 12,
+			bombs: 15
+		});
+	});
+	</script>
+</body>
+</html>
