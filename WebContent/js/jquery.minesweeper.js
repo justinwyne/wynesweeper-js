@@ -10,10 +10,6 @@
  */
 (function( $ ) {
 	
-	function _checkEndState(){
-		
-	};
-	
 	var methods = {
 		init : function(options) {
 		
@@ -22,11 +18,8 @@
 			//TODO: detect end game
 			//TODO: restart game
 			
-			//TODO: create data model first, then apply to UI
-			// don't make the UI the data model
 			//TODO: make sure all local vars are initialized with var
 			//TODO: http://docs.jquery.com/Plugins/Authoring#Summary_and_Best_Practices
-			//TODO: remove dependency on "B" values all over
 			var bombs;
 			var minefield;
 			var defaults = {
@@ -43,6 +36,10 @@
             for (var i = 0; i<options.rows; i++){
             	cells[i] = new Array(options.columns);
             }
+            
+        	function _checkEndState(){
+        		
+        	};
 			
             function _generateBombs(){
             	bombs = $([]);
@@ -71,24 +68,24 @@
 //				    el.addClass("bomb");
 //				});
 				bombs.addClass("bomb");
+//				bombs.html('<i class="icon-screenshot"></i>');
 			};
 			
 			function _getNeighbors( el ){
 				var neighbors = $([]);
 				var columnIndex = el.index();
-				var rowAbove = el.parent().prev();
-				var rowBelow = el.parent().next();
+				var above = el.parent().prev().find(".cell").eq( columnIndex );
+				var below = el.parent().next().find(".cell").eq( columnIndex );
 					
-				neighbors = neighbors.add( rowAbove.find(".cell").eq(columnIndex) );
-				neighbors = neighbors.add( rowAbove.find(".cell").eq(columnIndex).next() );
-				neighbors = neighbors.add( rowAbove.find(".cell").eq(columnIndex).prev() );
-				neighbors = neighbors.add( el.next() );
-				neighbors = neighbors.add( el.prev() );
-				neighbors = neighbors.add( rowBelow.find(".cell").eq(columnIndex) );
-				neighbors = neighbors.add( rowBelow.find(".cell").eq(columnIndex).next() );
-				neighbors = neighbors.add( rowBelow.find(".cell").eq(columnIndex).prev() );
+				neighbors = neighbors.add( above )
+					.add( above.next() )
+					.add( above.prev() )
+					.add( el.next() )
+					.add( el.prev() )
+					.add( below )
+					.add( below.next() )
+					.add( below.prev() );
 				
-				//TODO:filter for .cell
 				return neighbors.filter('.cell');
 			};
 			
@@ -130,19 +127,6 @@
 				
 			}
 			
-			function _getCellId(x, y){
-				var index = options.columns*(y) + (x); 
-				console.log( x+","+y + " --> i" + index);
-				return index;
-			};
-			
-			function _getCellCoords( index ){
-				var x = index % options.columns;
-				var y = Math.floor(index / options.columns);
-				console.log( "i" + index + " --> " + x + ","+y);
-				return {"x": x, "y": y};
-			};
-			
 			function _expandEmpty( el ) {
 				if ( el.is('.clean') ){
 					return;
@@ -175,17 +159,6 @@
 				});
 			};
 			
-			function _incrementCellValue( context, x, y ){
-				if ( x >= 0 && x < options.columns && y >= 0 && y < options.rows){
-					console.log( "increment " + "x"+x+" y"+y + " [" + _getCellId(x, y) +"]");
-					var index = _getCellId(x, y);
-					var v = $("#cell"+index).data("value");
-					if (v != "B"){
-						$("#cell"+index).data("value", ++v);
-					}
-				}
-			};
-			
 			return this.each(function() {
 				var o = options;
 				var $this = $(this);
@@ -213,14 +186,9 @@
 				
 			});
 		},
-		show : function() {
-			// IS
-		},
-		hide : function() {
-			// GOOD
-		},
-		update : function(content) {
-			// !!!
+		
+		reset : function() {
+			// ...
 		}
 	};
 
