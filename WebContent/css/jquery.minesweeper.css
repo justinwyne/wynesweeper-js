@@ -33,3 +33,9 @@
 .minesweeper div.flag{
 	background-color: yellow;
 }
+.minesweeper div.timer:before{
+	content: "Time:"
+}
+.minesweeper div.score:before{
+	content: "Mines:"
+}
