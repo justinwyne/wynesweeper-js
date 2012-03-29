@@ -13,6 +13,8 @@
 	var methods = {
 		init : function(options) {
 		
+			//TODO: check randomization indexes!!!
+		
 			//TODO: make sure all local vars are initialized with var
 			//TODO: http://docs.jquery.com/Plugins/Authoring#Summary_and_Best_Practices
 			var bombs;
@@ -21,6 +23,7 @@
 			var timer;
 			var resetButton;
 			var elapsedTime = 0;
+			var gameOver = false;
 			var defaults = {
 	                rows: 8,
 	                columns: 8,
@@ -60,7 +63,8 @@
 				if ( victory ){
 					
 				} else {
-					bombs.addClass("bomb");
+					bombs.removeClass("flag").addClass("bomb").addClass("clean").html('<i class="icon-screenshot"></i>');
+					gameOver = true;
 					_pauseTimer();
 				}
 			};
@@ -85,6 +89,14 @@
 			
 			//Function for setting up the initial DOM elements
 			function _buildFrame( ){
+				minefield.addClass('minesweeper');
+				minefield.append('<h3>Mine Sweeper</h3>');
+				timer = $('<div class="timer"></div>').appendTo( minefield );
+				score = $('<div class="score">' + options.bombs + '</div>').appendTo( minefield );
+				resetButton = $('<div class="reset">Reset</div>').appendTo( minefield );
+				resetButton.click( _resetMinefield );
+				
+				
 				$('<div class="minefield"></div>').appendTo( minefield );
 				
 				//Create rows
@@ -100,7 +112,7 @@
 				}
 				
 				//Set click event binding
-				minefield.find('.cell').click( _clickCell );
+				minefield.find('.cell').mouseup( _clickCell );
 			};
 			
 			function _resetMinefield(){
@@ -109,6 +121,7 @@
 				_generateBombs();
 				_setCellData();
 				_resetTimer();
+				gameOver = false;
 			}
 			
 			function _pauseTimer(){
@@ -123,22 +136,36 @@
 				timer.html( ++elapsedTime );
 			}
 			
-			function _clickCell(){
+			function _clickCell( event ){
+				//TODO: check for end of game 
+				if ( gameOver ){
+					return;
+				}
 				var $this = $(this); 
-				
 				//Start timer if not started
 				if ( !_intervalId )
 					_intervalId = setInterval(_incrementTimer, 1000);
 				
-				if ( $this.data('bomb') == true ){
-					_endGame( false );
-				} else if ( $this.data('value') == 0 ){
-					_expandEmpty( $this );
+				//If right click
+				if ( event.which == 3 ){
+					_flagCell( $this );
+					
+				//If any other click
 				} else {
-					$this.addClass('clean');
-					$this.html( $this.data("value") );
+					$this.removeClass("flag");
+					
+					if ( $this.data('bomb') == true ){
+						$this.addClass("hit");
+						_endGame( false );
+					} else if ( $this.data('value') == 0 ){
+						_expandEmpty( $this );
+					} else {
+						$this.addClass('clean');
+						var val = $this.data("value");
+						$this.addClass( "near" + val );
+						$this.html( val );
+					}
 				}
-				
 				
 			}
 			
@@ -149,16 +176,20 @@
 				
 				if ( el.data("value") == 0 ){
 					el.addClass('clean');
-					_getNeighbors(el).click();
+					_getNeighbors(el).trigger('mouseup');
 				}
 			}
 			
-			function _flagCell( object ){
+			function _flagCell( el ){
 				//determine actions
-				if ( object.hasClass("flag") ){
-					object.removeClass("flag");
-				} else if ( !object.hasClass("clean") ){
-					object.addClass("flag");
+				if ( el.hasClass("flag") ){
+					el.removeClass("flag");
+					el.html("");
+					//TODO: subtract mine from score
+				} else if ( !el.hasClass("clean") ){
+					el.addClass("flag");
+					el.html("");
+					//TODO: add mine score
 				}
 			};
 			
@@ -183,20 +214,13 @@
 					return;
 				}
 				
-				$this.addClass('minesweeper');
-				$this.append('<h3>Mine Sweeper</h3>');
-				timer = $('<div class="timer"></div>').appendTo( $this );
-				score = $('<div class="score">' + options.bombs + '</div>').appendTo( $this );
-				resetButton = $('<div class="reset">Reset</div>').appendTo( $this );
-				resetButton.click( _resetMinefield );
-				
 				_buildFrame();
 				_resetMinefield();
 				
 				$this.data('loaded', true);
+				
+				//Disable right click context menu so that we can flag cells
 				minefield.bind("contextmenu", function(e){ return false; });
-				//TODO:fix text selection
-//				$('.board div').attr('unselectable','on').css('MozUserSelect','none');;
 				
 			});
 		},
