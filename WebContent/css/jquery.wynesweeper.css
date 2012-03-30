@@ -1,0 +1,75 @@
+.wynesweeper{
+	display: inline-block;
+	padding: 15px;
+	-moz-user-select: none;
+  	-khtml-user-select: none;
+  	-webkit-user-select: none;
+  	user-select: none;
+}
+
+div.clear{ clear: both; }
+.wynesweeper div.timer{ float: right; }
+.wynesweeper div.timer:before{ content: "Time: "; }
+
+.wynesweeper div.score{ float: left; }
+.wynesweeper div.score:before{ content: "Remaining: "; }
+.wynesweeper div.menu{
+	font-size: large;
+	font-weight: bold;
+}
+.wynesweeper div.stats{ 
+	color: gray;
+	margin: auto auto; 
+	width: 100%; 
+	text-align:center;
+}
+.wynesweeper .minefield{
+	background-color: #555;
+}
+.wynesweeper .cell{
+	display: inline-block;
+	height: 24px;
+	width: 24px;
+	background-color: #555;
+	font-weight: bold;
+	color:white;
+	text-align:center;
+	vertical-align: middle;
+	line-height: 24px;
+	cursor: pointer;
+	box-shadow: inset 2px 2px 1px #AAA;
+}
+
+.wynesweeper div.outline{
+	box-shadow: inset 1px 1px 5px #C77;
+}
+
+.wynesweeper div.clean{
+	background-color: #DDD;
+	box-shadow: inset 0 0 1px #555;
+}
+
+.wynesweeper div.hit{
+	background-color: red;
+	box-shadow: inset 2px 2px 7px #440000;
+}
+
+.wynesweeper div.bomb i{
+	margin: 5px 0 0 2px;
+}
+
+.wynesweeper div.flag{ 
+	font-weight: bold;
+	background-position: -308px -18px;
+	background-image: url("../img/glyphicons-halflings-white.png");
+  	background-repeat: no-repeat; 
+}
+
+.wynesweeper div.near1{ color: blue }
+.wynesweeper div.near2{ color: green }
+.wynesweeper div.near3{ color: red }
+.wynesweeper div.near4{ color: purple }
+.wynesweeper div.near5{ color: #330000 }
+.wynesweeper div.near6{ color: teal }
+.wynesweeper div.near7{ color: black }
+.wynesweeper div.near8{ color: gray }

@@ -1,8 +1,8 @@
 <html>
 <head>
-	<title>Minesweeper</title>
+	<title>wynesweeper</title>
 	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" charset="utf-8" />
-	<link type="text/css" rel="stylesheet" href="css/jquery.minesweeper.css" charset="utf-8" />
+	<link type="text/css" rel="stylesheet" href="css/jquery.wynesweeper.css" charset="utf-8" />
 </head>
 <body>
 
@@ -15,12 +15,10 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Minesweeper</a>
+          <a class="brand" href="#">wynesweeper</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active"><a href="#">Play!</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li class="active"><a href="#">Home</a></li>
             </ul>
           </div>
         </div>
@@ -30,12 +28,14 @@
     <div class="container">
 
       <div class="hero-unit">
-        <p>Details about the game. Click below for more information.</p>
-        <p><a class="btn btn-primary btn-large">Learn more &raquo;</a>
-        <a class="btn btn-large">View on Github</a>
-        <a class="btn btn-danger btn-large">
-        	<i class="icon-download-alt"></i>
-        	Download Zip Archive</a></p>
+        <p>wynesweeper was built in jQuery and tested in Google Chrome.
+        </p>
+        <p>
+	        <a class="btn btn-danger btn-large">
+    	    	<i class="icon-download-alt"></i>
+        		Download Source (.tgz)</a>
+       		<a class="btn btn-primary btn-large">View on Github &raquo;</a>
+        </p>
       </div>
 
       <div class="row">
@@ -62,19 +62,19 @@
 			<div id="game2"></div>
         </div>
         </div>
-      </div>
+      </div><!--
       
       <a name="about"></a>
       <div class="row">
       	<div class="span12">
       		<h2>About</h2>
-      		<p>This is a standalone minesweeper game built as a jQuery plugin. It is
+      		<p>This is a standalone wynesweeper game built as a jQuery plugin. It is
       		easily installable in any web page with the inclusion of the provided
       		javascript file.</p>
       	</div>
       </div>
 
-      <hr>
+      --><hr>
 
       <footer>
         <p>&copy; JustinWyne.com 2012</p>
@@ -87,15 +87,16 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/jquery.minesweeper.js"></script>
+	<script type="text/javascript" src="js/MineUtils.js"></script>
+	<script type="text/javascript" src="js/jquery.wynesweeper.js"></script>
 	
 	<script type="text/javascript">
 	$(document).ready(function() {
-		$('#game1').minesweeper();
-		$('#game2').minesweeper( {
-			rows: 6,
-			columns: 12,
-			bombs: 10
+		$('#game1').wynesweeper();
+		$('#game2').wynesweeper( {
+			rows: 5,
+			columns: 5,
+			mines: 1
 		});
 	});
 	</script>
