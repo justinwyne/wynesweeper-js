@@ -74,11 +74,11 @@ MineUtils.Menu.prototype.newGame = function(){
 };
 MineUtils.Menu.prototype.defeat = function( ){
 	this.element.html("Defeat!");
-	resetButton.fadeIn();
+	this.resetButton.fadeIn();
 	return this;
 };
 MineUtils.Menu.prototype.victory = function( ){
 	this.element.html("Victory!");
-	resetButton.fadeIn();
+	this.resetButton.fadeIn();
 	return this;
 };
