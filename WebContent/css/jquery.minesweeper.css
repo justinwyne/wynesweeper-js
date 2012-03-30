@@ -1,6 +1,6 @@
 .minesweeper{
 	display: inline-block;
-	padding: 30px;
+	padding: 15px;
 }
 .minesweeper .minefield{
 	background-color: #555;
@@ -21,6 +21,10 @@
   	-khtml-user-select: none;
   	-webkit-user-select: none;
   	user-select: none;
+}
+
+.minesweeper div.outline{
+	box-shadow: inset 1px 1px 5px #C77;
 }
 
 .minesweeper div.clean{

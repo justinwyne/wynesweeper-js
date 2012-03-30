@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>Minesweeper!</title>
+	<title>Minesweeper</title>
 	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" charset="utf-8" />
 	<link type="text/css" rel="stylesheet" href="css/jquery.minesweeper.css" charset="utf-8" />
 </head>
@@ -39,11 +39,40 @@
       </div>
 
       <div class="row">
-        <div class="span12">
+      	<div class="span4">
+      		<h2>Instructions</h2>
+      		<h3>Controls</h3>
+      		<p>
+      			<ul>
+      				<li>Click to reveal</li>
+      				<li>Right click to flag</li>
+      			</ul>
+      		</p>
+      		<h3>Cheat</h3>
+      		<p>
+      			<ul>
+      				<li>Click the Mine counter 10 times</li>
+      			</ul>
+      		</p>
+      	</div>
+        <div class="span8">
+        <div class="well">
           <h2>Play the Game</h2>
 			<div id="game1"></div>
 			<div id="game2"></div>
         </div>
+        </div>
+      </div>
+      
+      <a name="about"></a>
+      <div class="row">
+      	<div class="span12">
+      		<h2>About</h2>
+      		<p>This is a standalone minesweeper game built as a jQuery plugin. It is
+      		easily installable in any web page with the inclusion of the provided
+      		javascript file.</p>
+      	</div>
+      </div>
 
       <hr>
 
@@ -51,7 +80,7 @@
         <p>&copy; JustinWyne.com 2012</p>
       </footer>
 
-    </div>
+    
 
     <!-- javascript
     ================================================== -->
@@ -66,7 +95,7 @@
 		$('#game2').minesweeper( {
 			rows: 6,
 			columns: 12,
-			bombs: 25
+			bombs: 10
 		});
 	});
 	</script>

@@ -13,11 +13,10 @@
 	var methods = {
 		init : function(options) {
 		
-			//TODO: check randomization indexes!!!
-		
 			//TODO: make sure all local vars are initialized with var
 			//TODO: http://docs.jquery.com/Plugins/Authoring#Summary_and_Best_Practices
 			var bombs;
+			var cheatCounter = 0;
 			var minefield;
 			var _intervalId;
 			var timer;
@@ -40,12 +39,11 @@
             
             function _generateBombs(){
             	bombs = $([]);
-            	//TODO: check for random indexing 0 or 1?
 				var cellCount = options.rows * options.columns;
 				var bombsIndices = new Array( options.bombs );
 				var x = 0;
 				while ( x < options.bombs ){
-					index = Math.floor( Math.random() * (cellCount+1) );
+					index = Math.floor( Math.random() * (cellCount) );
 					if ( $.inArray(index, bombsIndices) == -1  ){
 						bombsIndices[x++] = index;
             		}
@@ -56,16 +54,20 @@
 					bomb.data('bomb', true);
 					bombs = bombs.add( bomb );
 				});
-				
 			};
 			
+			function _checkVictory(){
+				if ( minefield.find(".cell").filter(".active").size() == options.bombs ){
+					_endGame( true );
+				}
+			}
 			function _endGame( victory ){
+				_pauseTimer();
+				gameOver = true;
 				if ( victory ){
-					
+					//TODO: WIN alert
 				} else {
 					bombs.removeClass("flag").addClass("bomb").addClass("clean").html('<i class="icon-screenshot"></i>');
-					gameOver = true;
-					_pauseTimer();
 				}
 			};
 			
@@ -90,11 +92,11 @@
 			//Function for setting up the initial DOM elements
 			function _buildFrame( ){
 				minefield.addClass('minesweeper');
-				minefield.append('<h3>Mine Sweeper</h3>');
 				timer = $('<div class="timer"></div>').appendTo( minefield );
-				score = $('<div class="score">' + options.bombs + '</div>').appendTo( minefield );
+				score = $('<div class="score">' + options.bombs + '</div>').appendTo( minefield ).click(_cheat);
 				resetButton = $('<div class="reset">Reset</div>').appendTo( minefield );
 				resetButton.click( _resetMinefield );
+				statsBar = $('<div class="stats"></div>')
 				
 				
 				$('<div class="minefield"></div>').appendTo( minefield );
@@ -117,7 +119,7 @@
 			
 			function _resetMinefield(){
 				//Reset cells
-				minefield.find(".cell").data('value',0).data('bomb',null).removeClass().addClass("cell").html("");
+				minefield.find(".cell").data('value',0).data('bomb',null).removeClass().addClass("cell active").html("");
 				_generateBombs();
 				_setCellData();
 				_resetTimer();
@@ -136,15 +138,18 @@
 				timer.html( ++elapsedTime );
 			}
 			
+			function _cheat(){
+				if(++cheatCounter % 10 == 0)
+					bombs.toggleClass("outline");
+			}
+			
 			function _clickCell( event ){
-				//TODO: check for end of game 
-				if ( gameOver ){
-					return;
-				}
+				if ( gameOver ){ return; }
+				
 				var $this = $(this); 
+				
 				//Start timer if not started
-				if ( !_intervalId )
-					_intervalId = setInterval(_incrementTimer, 1000);
+				if ( !_intervalId ) { _intervalId = setInterval(_incrementTimer, 1000); }
 				
 				//If right click
 				if ( event.which == 3 ){
@@ -152,7 +157,9 @@
 					
 				//If any other click
 				} else {
+					// TODO: unflag _flagCell
 					$this.removeClass("flag");
+					$this.removeClass("active");
 					
 					if ( $this.data('bomb') == true ){
 						$this.addClass("hit");
@@ -166,6 +173,8 @@
 						$this.html( val );
 					}
 				}
+				
+				_checkVictory();
 				
 			}
 			
@@ -189,7 +198,7 @@
 				} else if ( !el.hasClass("clean") ){
 					el.addClass("flag");
 					el.html("");
-					//TODO: add mine score
+					//TODO: add to mine score
 				}
 			};
 			
@@ -220,7 +229,7 @@
 				$this.data('loaded', true);
 				
 				//Disable right click context menu so that we can flag cells
-				minefield.bind("contextmenu", function(e){ return false; });
+				$this.bind("contextmenu", function(e){ return false; });
 				
 			});
 		},
