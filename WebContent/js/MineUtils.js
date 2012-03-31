@@ -65,7 +65,7 @@ MineUtils.Score.prototype.reset = function(){
 
 MineUtils.Menu = function() {
 	this.element = $('<div class="menu"></div>');
-	this.resetButton = $('<div class="btn btn-small">Reset</div>');
+	this.resetButton = $('<div class="btn btn-small reset">Reset</div>');
 	return this;
 };
 MineUtils.Menu.prototype.newGame = function(){
@@ -73,7 +73,7 @@ MineUtils.Menu.prototype.newGame = function(){
 	return this;
 };
 MineUtils.Menu.prototype.defeat = function( ){
-	this.element.html("Defeat!");
+	this.element.html("You Lose!");
 	this.resetButton.fadeIn();
 	return this;
 };

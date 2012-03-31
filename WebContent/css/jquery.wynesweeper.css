@@ -16,6 +16,10 @@ div.clear{ clear: both; }
 .wynesweeper div.menu{
 	font-size: large;
 	font-weight: bold;
+	float:left;
+}
+.wynesweeper div.reset{
+	float: right;
 }
 .wynesweeper div.stats{ 
 	color: gray;

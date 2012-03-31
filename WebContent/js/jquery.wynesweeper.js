@@ -224,16 +224,22 @@
 		 */
 		function _flagCell( el, val ){
 			var isFlagged = el.hasClass("flag");
-			if ( val == true && isFlagged )
+			//Short circuit if it's already
+			//the value we want (true/false)
+			//If undefined, skip to toggle
+			if ( val === true && isFlagged )
 				return;
-			if ( val == false && !isFlagged )
+			if ( val === false && !isFlagged )
 				return;
 			
-			if ( isFlagged )
-				score.dec();
-			else 
+			
+			if ( isFlagged ){
 				score.inc();
+			} else { 
+				score.dec();
+			}
 			
+			//Toggle flag
 			el.toggleClass("flag");
 		};
 		

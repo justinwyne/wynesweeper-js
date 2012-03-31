@@ -19,6 +19,7 @@
           <div class="nav-collapse">
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
+              <li class="active"><a href="#customize">Customize</a></li>
             </ul>
           </div>
         </div>
@@ -31,10 +32,11 @@
         <p>wynesweeper was built in jQuery and tested in Google Chrome.
         </p>
         <p>
-	        <a class="btn btn-danger btn-large">
+	        <a class="btn btn-danger btn-large" href="https://github.com/justinwyne/wynesweeper-js/zipball/master">
     	    	<i class="icon-download-alt"></i>
-        		Download Source (.tgz)</a>
-       		<a class="btn btn-primary btn-large">View on Github &raquo;</a>
+        		Download Source (.zip)</a>
+       		<a class="btn btn-primary btn-large"
+       		href="https://github.com/justinwyne/wynesweeper-js">View on Github &raquo;</a>
         </p>
       </div>
 
@@ -57,24 +59,39 @@
       	</div>
         <div class="span8">
         <div class="well">
-          <h2>Play the Game</h2>
+          <h2>Play the Game!</h2>
 			<div id="game1"></div>
 			<div id="game2"></div>
         </div>
         </div>
-      </div><!--
+      </div>
       
-      <a name="about"></a>
+      <a name="customize"></a>
       <div class="row">
       	<div class="span12">
-      		<h2>About</h2>
-      		<p>This is a standalone wynesweeper game built as a jQuery plugin. It is
-      		easily installable in any web page with the inclusion of the provided
-      		javascript file.</p>
+      		<h2>Custom Size</h2>
+      		<p>
+      		<form>
+      			<select id="width" class="span1"></select>
+      			 x 
+      			<select id="height" class="span1"></select>
+      			 with 
+      			<select id="mines" class="span1"></select>
+      			 mines
+      			 
+      			<div id="create" class="btn btn-primary">Create Game</div>
+      			
+      			<div class="clear"></div>
+      			<div id="custom">
+      				<div/>
+      			</div>
+      			
+      			</form>
+      		</p>
       	</div>
       </div>
 
-      --><hr>
+      <hr>
 
       <footer>
         <p>&copy; JustinWyne.com 2012</p>
@@ -92,12 +109,40 @@
 	
 	<script type="text/javascript">
 	$(document).ready(function() {
-		$('#game1').wynesweeper();
-		$('#game2').wynesweeper( {
-			rows: 5,
-			columns: 5,
-			mines: 1
+		var selects = $("#width, #height");
+		for ( var i = 5; i<=25; i++){
+			selects.each(function(){
+				$(this).append(
+					$("<option />").val(i).text(i)
+				);
+			});
+		}
+		enumerateMineList();
+		selects.change( enumerateMineList );
+
+		function enumerateMineList(){
+			$("#mines").find('option')
+	    	.remove()
+	    	.end();
+			for ( var i = 1; i < $("#width").val()*$("#height").val(); i++){
+				$("#mines").append(
+					$("<option />").val(i).text(i)
+				);
+			}	
+		}
+		
+
+		$("#create").click(function(){
+			$("#custom").html("");
+			game = $("<div/>").appendTo($("#custom"));
+			game.wynesweeper({
+				rows: $("#height").val(),
+                columns: $("#width").val(),
+                mines: $("#mines").val()
+			});
 		});
+		
+		$('#game1').wynesweeper();
 	});
 	</script>
 </body>
